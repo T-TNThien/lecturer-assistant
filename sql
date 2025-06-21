@@ -1,0 +1,27 @@
+CREATE DATABASE `assistant`;
+
+CREATE TABLE `user` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `role` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `class` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `description` TEXT,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `material` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `classId` INT UNSIGNED NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `description` TEXT,
+  `filePath` VARCHAR(255) NOT NULL,
+  `uploadedTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_material_class` FOREIGN KEY (`classId`) REFERENCES `class`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
